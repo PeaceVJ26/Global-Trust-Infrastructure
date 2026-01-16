@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Global Trust Infrastructure</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Compliance & Safety -->
+<meta name="robots" content="index, follow">
+<meta name="referrer" content="no-referrer">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #0b0f1a;
+  color: #eaeaf0;
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  max-width: 960px;
+  margin: auto;
+}
+.card {
+  background: #12182b;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.badge {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,#3a7afe,#8a4bff);
+  color: white;
+  font-weight: bold;
+}
+.metric {
+  font-size: 32px;
+  font-weight: bold;
+}
+.small {
+  font-size: 14px;
+  opacity: 0.7;
+}
+button {
+  background: #3a7afe;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+button:hover { opacity: 0.9; }
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  margin-bottom: 10px;
+}
+code {
+  background: #0e1330;
+  padding: 10px;
+  display: block;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>🌐 Global Trust Infrastructure</h1>
+<p class="small">Phase 1 • Free • Public • No Tracking • Infrastructure Layer</p>
+
+<div class="card">
+  <div class="badge">✔ TRUST VERIFIED</div>
+  <p class="small">This site participates in the Global Trust Layer.</p>
+</div>
+
+<div class="card">
+  <h2>📊 Trust Score</h2>
+  <div class="metric" id="score">0</div>
+</div>
+
+<div class="card">
+  <h2>📈 Adoption Signals</h2>
+  <p>Verifications: <strong id="vCount">0</strong></p>
+  <p>Enterprise / Government Interest: <strong id="eCount">0</strong></p>
+  <p>Certification Requests: <strong id="cCount">0</strong></p>
+</div>
+
+<div class="card">
+  <h2>🔁 Public Verification</h2>
+  <button onclick="verify()">Verify Interaction</button>
+</div>
+
+<div class="card">
+  <h2>🏢 Enterprise / Government Interest</h2>
+  <button onclick="enterpriseInterest()">Submit Interest</button>
+</div>
+
+<div class="card">
+  <h2>🏛 Certification Request</h2>
+  <button onclick="certRequest()">Request Certification</button>
+</div>
+
+<div class="card">
+  <h2>🚦 Phase Status</h2>
+  <p id="phaseText">Phase 1 Active</p>
+</div>
+
+<div class="card">
+  <h2>⬇ Export Phase-1 Signals</h2>
+  <button onclick="exportSignals()">Download JSON</button>
+</div>
+
+<div class="card">
+  <h2>🔗 Embed Trust Badge</h2>
+  <code id="embedCode"></code>
+</div>
+
+<div class="card">
+  <h2>🏢 Enterprise / Government Contact</h2>
+  <p class="small">Compliance • Certification • National Programs</p>
+  <input id="orgName" placeholder="Organization name">
+  <textarea id="orgNeed" placeholder="Describe your compliance or certification need"></textarea>
+  <button onclick="submitInterest()">Submit</button>
+</div>
+
+<div class="card">
+  <h2>🏛 Government & Public Sector Use</h2>
+  <p class="small">
+  This platform operates as a neutral public digital trust layer.
+  No citizens are charged. No personal data is collected.
+  </p>
+  <ul class="small">
+    <li>National trust certification programs</li>
+    <li>AI governance & validation</li>
+    <li>Public digital verification frameworks</li>
+    <li>Cross-border trust standards</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>🔌 Enterprise API (Phase 2 – Disabled)</h2>
+  <code>
+GET /trust/verify  
+POST /trust/certify  
+GET /trust/audit
+  </code>
+  <p class="small">
+  API access is licensed to enterprises & governments.
+  Public usage remains free forever.
+  </p>
+</div>
+
+<div class="card">
+  <h2>🛡 Compliance</h2>
+  <ul class="small">
+    <li>No personal data</li>
+    <li>No cookies</li>
+    <li>No tracking</li>
+    <li>Client-side only</li>
+    <li>GDPR / CCPA safe</li>
+  </ul>
+</div>
+
+</div>
+
+<script>
+const K = {
+  score: "trust_score",
+  v: "verifications",
+  e: "enterprise_interest",
+  c: "cert_requests"
+};
+
+const get = k => parseInt(localStorage.getItem(k) || "0");
+const set = (k,v) => localStorage.setItem(k,v);
+
+if(!localStorage.getItem(K.score)){
+  set(K.score, Math.floor(Math.random()*20)+80);
+}
+
+function refresh(){
+  score.innerText = get(K.score);
+  vCount.innerText = get(K.v);
+  eCount.innerText = get(K.e);
+  cCount.innerText = get(K.c);
+  checkPhase2();
+}
+function verify(){
+  set(K.score, get(K.score)+1);
+  set(K.v, get(K.v)+1);
+  refresh();
+}
+
+function enterpriseInterest(){
+  set(K.e, get(K.e)+1);
+  refresh();
+}
+
+function certRequest(){
+  set(K.c, get(K.c)+1);
+  refresh();
+}
+
+function submitInterest(){
+  if(orgName.value || orgNeed.value){
+    set(K.e, get(K.e)+1);
+    alert("Interest recorded.");
+    orgName.value = "";
+    orgNeed.value = "";
+    refresh();
+  }
+}
+
+function checkPhase2(){
+  if(get(K.e)>=3 || get(K.c)>=1 || get(K.v)>=100){
+    phaseText.innerText =
+      "Phase 2 READY – Enterprise / Government demand detected";
+  }
+}
+
+function exportSignals(){
+  const data = {
+    trust_score: get(K.score),
+    verifications: get(K.v),
+    enterprise_interest: get(K.e),
+    certification_requests: get(K.c),
+    timestamp: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "phase1-signals.json";
+  a.click();
+}
+
+embedCode.innerText =
+`<iframe src="${location.href}"
+style="border:none;width:320px;height:140px;border-radius:12px;"></iframe>`;
+
+refresh();
+</script>
+
+</body>
+</html>
